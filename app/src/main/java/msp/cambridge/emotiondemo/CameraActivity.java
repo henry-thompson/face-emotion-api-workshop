@@ -55,7 +55,6 @@ public class CameraActivity extends AppCompatActivity implements CallEmotionApiT
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        hideStatusBar();
         setContentView(R.layout.activity_camera);
 
         mCameraView = (CameraView) findViewById(R.id.activity_camera_camera_view);
@@ -241,14 +240,6 @@ public class CameraActivity extends AppCompatActivity implements CallEmotionApiT
                     }
                 })
                 .create();
-    }
-
-    /** Hides the Status Bars from the UI. */
-    private void hideStatusBar() {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     /** Callback called by the CameraView whenever a picture is taken. */
