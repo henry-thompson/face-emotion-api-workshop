@@ -7,5 +7,5 @@
     <string name="internet_permission_rationale">The internet is required to contact the Face API endpoint</string>
     <string name="activity_camera_take_photo">Take Photo</string>
     <string name="error_connecting_to_api">Error connecting to API</string>
-    <string name="emotion_api_subscription_key">9d3be81840fa4dfcbe941becc8c88f73</string>
+    <string name="emotion_api_subscription_key">YOUR_SUBSCRIPTION_KEY_HERE</string>
 </resources>
