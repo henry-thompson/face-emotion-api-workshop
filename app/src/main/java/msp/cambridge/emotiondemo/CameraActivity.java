@@ -1,4 +1,4 @@
-package msp.cambridge.facedemo;
+package msp.cambridge.emotiondemo;
 
 import android.Manifest;
 import android.content.pm.PackageManager;

@@ -1,4 +1,4 @@
-package msp.cambridge.facedemo;
+package msp.cambridge.emotiondemo;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

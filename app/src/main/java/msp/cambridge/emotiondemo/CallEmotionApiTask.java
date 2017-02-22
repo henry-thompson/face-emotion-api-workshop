@@ -1,4 +1,4 @@
-package msp.cambridge.facedemo;
+package msp.cambridge.emotiondemo;
 
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
