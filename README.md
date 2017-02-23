@@ -10,7 +10,8 @@ If you just want to watch how to build an app with Cognitive Services just come 
 
 1. Proficiency in Java. Understanding of the Observer deisgn pattern desirable.
 2. A working installation of [Android Studio](https://developer.android.com/studio/index.html).
-3. Some way to run Android apps. A physical Android device connected over USB is desirable (_don't forget your USB cable!_), otherwise an emulator will do.
+3. Make sure you have Git installed. If not, follow instructions [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
+4. Some way to run Android apps. A physical Android device connected over USB is desirable (_don't forget your USB cable!_), otherwise an emulator will do.
 
 Windows, Mac OS and Linux are all acceptable.
 
@@ -20,12 +21,11 @@ If you just want to watch how to build an app with Cognitive Services just come 
 
 If you want to follow along with the coding then make sure you have the following. __It is highly recommended you do this before coming along.__
 
-1. Make sure you have Git installed. If not, follow instructions [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
-2. Clone this repository by typing this command: `git clone https://github.com/cambridge-msp/face-emotion-api-workshop.git`.
-3. Navigate to the project directory: `cd face-emotion-api-workshop`.
-4. Open Android Studio. Open this project - it is in the directory mentioned in point 3. It is likely that Android Studio will complain that the correct SDK version is not installed: _install the SDK_ by following the instructions if so.
-5. It is likely Android Studio will say the project requires a Gradle Sync. Follow the instructions to sync the project.
-6. Checkout the workshop branch: `git checkout workshop`.
+1. Clone this repository by typing this command: `git clone https://github.com/cambridge-msp/face-emotion-api-workshop.git`.
+2. Navigate to the project directory: `cd face-emotion-api-workshop`.
+3. Open Android Studio. Open this project - it is in the directory mentioned in point 3. It is likely that Android Studio will complain that the correct SDK version is not installed: _install the SDK_ by following the instructions if so.
+4. It is likely Android Studio will say the project requires a Gradle Sync. Follow the instructions to sync the project.
+5. Checkout the workshop branch: `git checkout workshop`.
 
 If you don't want the "workshop version" but would rather see the complete version, do `git checkout master` at any point. To return to the workshop version, do `git checkout workshop`. (See below for details on the "workshop version").
 
