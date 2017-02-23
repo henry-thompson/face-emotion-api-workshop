@@ -7,7 +7,7 @@ the Cognitive Services Face APIs.
 ## Prerequisites
 
 1. Proficiency in Java. Understanding of the Observer deisgn pattern desirable.
-2. A working installation of (Android Studio)[https://developer.android.com/studio/index.html].
+2. A working installation of [Android Studio](https://developer.android.com/studio/index.html).
 3. Some way to run Android apps. A physical Android device connected over USB is desirable (_don't forget your USB cable!_), otherwise an emulator will do.
 
 Windows, Mac OS and Linux are all acceptable.
@@ -16,7 +16,7 @@ Windows, Mac OS and Linux are all acceptable.
 
 If you are attending this workshop do the following. __It is highly recommended you do this before coming along.__
 
-1. Make sure you have Git installed. If not, follow instructions (here)[https://git-scm.com/book/en/v2/Getting-Started-Installing-Git].
+1. Make sure you have Git installed. If not, follow instructions [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
 2. Clone this repository by typing this command: `git clone https://github.com/henry-thompson/face-emotion-api-workshop.git`.
 3. Navigate to the project directory: `cd face-emotion-api-workshop`.
 4. Open Android Studio. Open this project - it is in the directory mentioned in point 3. It is likely that Android Studio will complain that the correct SDK version is not installed: _install the SDK_ by following the instructions if so.
