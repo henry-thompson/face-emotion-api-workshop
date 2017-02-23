@@ -23,7 +23,7 @@ If you want to follow along with the coding then make sure you have the followin
 
 1. Clone this repository by typing this command: `git clone https://github.com/cambridge-msp/face-emotion-api-workshop.git`.
 2. Navigate to the project directory: `cd face-emotion-api-workshop`.
-3. Open Android Studio. Open this project - it is in the directory mentioned in point 3. It is likely that Android Studio will complain that the correct SDK version is not installed: _install the SDK_ by following the instructions if so.
+3. Open Android Studio. Open this project - it is in the directory mentioned in point 2. It is likely that Android Studio will complain that the correct SDK version is not installed: _install the SDK_ by following the instructions if so.
 4. It is likely Android Studio will say the project requires a Gradle Sync. Follow the instructions to sync the project.
 5. Checkout the workshop branch: `git checkout workshop`.
 
