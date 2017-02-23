@@ -15,8 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -25,32 +23,46 @@ import com.google.android.cameraview.CameraView;
 import com.microsoft.projectoxford.emotion.EmotionServiceClient;
 import com.microsoft.projectoxford.emotion.EmotionServiceRestClient;
 import com.microsoft.projectoxford.emotion.contract.RecognizeResult;
+import com.microsoft.projectoxford.face.FaceServiceClient;
+import com.microsoft.projectoxford.face.FaceServiceRestClient;
+import com.microsoft.projectoxford.face.contract.VerifyResult;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
- * Activity showing the camera and allowing users to take photos.
+ * Activity showing the camera and allowing users to take photos, demonstrating the abilities of
+ * both the Emotion and Face APIs.
  *
  * @author Henry Thompson
  */
-public class CameraActivity extends AppCompatActivity implements CallEmotionApiTask.OnEmotionRequestComplete {
-    /** The tag used in the log to indicate that a log entry was created in this class */
-    private static final String LOG_TAG = "CameraActivity";
+public class CameraActivity extends AppCompatActivity implements
+        CallEmotionApiTask.OnEmotionRequestComplete,
+        VerifyIsCharliesFaceTask.OnAssessIsCharliesFaceComplete {
 
-    /** The Client for accessing the Microsoft Emotion API endpoint */
+    /** The Client for accessing the Microsoft Emotion API endpoint. */
     private EmotionServiceClient mEmotionClient;
 
-    /** The View which displays what is in front of the back camera to the user */
+    /** The Client for accessing the Microsoft Face API endpoint. */
+    private FaceServiceClient mFaceClient;
+
+    /** The View which displays what is in front of the back camera to the user. */
     private CameraView mCameraView;
 
-    /** The Button which, when pressed, triggers the camera to take a picture and submit it to the Emotion API */
-    private Button mTakePhotoButton;
+    /** The Button which, when pressed, triggers the camera to take a picture and submit it to the Emotion API. */
+    private Button mAssessEmotionsButton;
 
-    /** A spinning animation shown when the Client is sending the image to the Emotion API endpoint */
+    /** The Button which, when pressed, triggers the camera to take a picture and submit it to the Face API. */
+    private Button mAssessCrispinessButton;
+
+    /** A spinning animation shown when the Client is sending the image to the Emotion API endpoint. */
     private ProgressBar mProgressBar;
 
-    /** The ListView displaying the result of the request to the Emotion API endpoint */
+    /** The ListView displaying the result of the request to the Emotion API endpoint. */
     private ListView mResultsList;
+
+    /** Specifies whether we are demonstrating the Emotion API or Face API currently. */
+    private DemonstrationMode mDemonstrationMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +70,17 @@ public class CameraActivity extends AppCompatActivity implements CallEmotionApiT
         setContentView(R.layout.activity_camera);
 
         mCameraView = (CameraView) findViewById(R.id.activity_camera_camera_view);
-        mTakePhotoButton = (Button) findViewById(R.id.activity_camera_take_photo_button);
+        mAssessEmotionsButton = (Button) findViewById(R.id.activity_camera_emotion_button);
+        mAssessCrispinessButton = (Button) findViewById(R.id.activity_camera_crisp_button);
         mProgressBar = (ProgressBar) findViewById(R.id.activity_camera_progress);
         mResultsList = (ListView) findViewById(R.id.activity_camera_result_list);
 
         mEmotionClient = new EmotionServiceRestClient(getString(R.string.emotion_api_subscription_key));
+        mFaceClient = new FaceServiceRestClient(getString(R.string.face_api_subscription_key));
 
         mCameraView.addCallback(onPictureTaken);
-        mTakePhotoButton.setOnClickListener(v -> takePicture());
+        mAssessEmotionsButton.setOnClickListener(v -> assessEmotion());
+        mAssessCrispinessButton.setOnClickListener(v -> assessCrispiness());
         mResultsList.setTranslationY(1000);
 
         mResultsList.post(this::hideResultsListNoAnimation);
@@ -121,11 +136,32 @@ public class CameraActivity extends AppCompatActivity implements CallEmotionApiT
         }
     }
 
-    /** Takes a picture using the Camera View provided that we have sufficient permissions to. */
-    private void takePicture() {
+    /**
+     * Takes a picture using the Camera View provided that we have sufficient permissions to, and
+     * triggers the asynchronous call to the Emotion API in doing so.
+     */
+    private void assessEmotion() {
         if (hasCameraPermission()) {
+            mDemonstrationMode = DemonstrationMode.Emotion;
             mCameraView.takePicture();
-            mTakePhotoButton.setEnabled(false);
+            mAssessEmotionsButton.setEnabled(false);
+            mAssessCrispinessButton.setEnabled(false);
+        }
+        else {
+            requestCameraPermission();
+        }
+    }
+
+    /**
+     * Takes a picture using the Camera View provided that we have sufficient permissions to, and
+     * triggers the asynchronous call to the Face API in doing so.
+     */
+    private void assessCrispiness() {
+        if (hasCameraPermission()) {
+            mDemonstrationMode = DemonstrationMode.Face;
+            mCameraView.takePicture();
+            mAssessEmotionsButton.setEnabled(false);
+            mAssessCrispinessButton.setEnabled(false);
         }
         else {
             requestCameraPermission();
@@ -243,7 +279,8 @@ public class CameraActivity extends AppCompatActivity implements CallEmotionApiT
     }
 
     /** Callback called by the CameraView whenever a picture is taken. */
-    private CameraView.Callback onPictureTaken = new CameraView.Callback() {
+    private final CameraView.Callback onPictureTaken = new CameraView.Callback() {
+
         @Override
         public void onPictureTaken(@NonNull final CameraView cameraView,
                                    @NonNull final byte[] data) {
@@ -258,7 +295,13 @@ public class CameraActivity extends AppCompatActivity implements CallEmotionApiT
 
             showProgressSpinner();
 
-            new CallEmotionApiTask(data, mEmotionClient, CameraActivity.this).execute();
+            if (mDemonstrationMode == DemonstrationMode.Emotion) {
+                new CallEmotionApiTask(mEmotionClient, CameraActivity.this).execute(data);
+            }
+            else if (mDemonstrationMode == DemonstrationMode.Face) {
+                final InputStream charlie = getResources().openRawResource(R.raw.charlie);
+                new VerifyIsCharliesFaceTask(charlie, mFaceClient, CameraActivity.this).execute(data);
+            }
         }
     };
 
@@ -286,10 +329,33 @@ public class CameraActivity extends AppCompatActivity implements CallEmotionApiT
     }
 
     @Override
+    public void onAssessIsCharliesFaceComplete(@NonNull final VerifyResult result,
+                                               @NonNull final byte[] image) {
+        final double confidencePercentage = result.confidence * 100;
+        final String message;
+
+        if (result.isIdentical) {
+            message = "Yes you are! You are in fact " + confidencePercentage + "% Crispy.";
+        }
+        else {
+            message = "No you're not, you're only " + confidencePercentage + "% Crispy.";
+        }
+
+        new AlertDialog.Builder(this)
+                .setTitle("Are you Charlie Crisp?")
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, null)
+                .setOnDismissListener(v -> resetCameraActivity())
+                .show();
+    }
+
+    @Override
     public void onError(@NonNull Exception exception) {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.error_connecting_to_api)
                 .setMessage(exception.getMessage())
+                .setPositiveButton(android.R.string.ok, null)
+                .setOnDismissListener(v -> resetCameraActivity())
                 .show();
     }
 
@@ -327,9 +393,20 @@ public class CameraActivity extends AppCompatActivity implements CallEmotionApiT
         }
 
         mProgressBar.setVisibility(View.GONE);
-        mTakePhotoButton.setEnabled(true);
+        mAssessEmotionsButton.setEnabled(true);
+        mAssessCrispinessButton.setEnabled(true);
         hideResultsList();
     }
+
+    /**
+     * Represents whether the app is currently being used to demonstrate the Emotion or the Face API.
+     */
+    private enum DemonstrationMode {
+        Emotion, Face
+    }
+
+    /** The tag used in the log to indicate that a log entry was created in this class. */
+    private static final String LOG_TAG = "CameraActivity";
 
     /** The code representing this fragment's request to use the Camera */
     private static final int PERMISSION_CODE_REQUEST_CAMERA = 1;

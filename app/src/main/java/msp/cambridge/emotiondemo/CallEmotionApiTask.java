@@ -15,9 +15,7 @@ import java.util.List;
  *
  * @author Henry Thompson
  */
-public class CallEmotionApiTask extends AsyncTask<Void, Void, List<RecognizeResult>> {
-    /** The bytes representing the JPEG image to be submitted to the emotion API endpoint. */
-    private final byte[] _image;
+public class CallEmotionApiTask extends AsyncTask<byte[], Void, List<RecognizeResult>> {
 
     /** The Client for contacting the Emotion API endpoint. */
     private final EmotionServiceClient _emotionClient;
@@ -31,9 +29,10 @@ public class CallEmotionApiTask extends AsyncTask<Void, Void, List<RecognizeResu
      */
     private Exception mException = null;
 
-    /**
-     * Interface for the callback after the CallEmotionApi asynchronous task completes.
-     */
+    /** The bytes representing the JPEG image to be submitted to the emotion API endpoint. */
+    private byte[] mImage;
+
+    /** Interface for the callback after the CallEmotionApi asynchronous task completes. */
     public interface OnEmotionRequestComplete {
         /**
          * Called when the asychronous task has successfully called the Emotion API endpoint.
@@ -53,22 +52,20 @@ public class CallEmotionApiTask extends AsyncTask<Void, Void, List<RecognizeResu
     }
 
     /**
-     * @param image The bytes representing the image to be analysed by the Emotion API.
      * @param emotionClient The Client to be used for contacting the Emotion API.
      * @param listener The callback used to indicate when the asynchronous task is finished.
      */
-    public CallEmotionApiTask(@NonNull final byte[] image,
-                              @NonNull final EmotionServiceClient emotionClient,
+    public CallEmotionApiTask(@NonNull final EmotionServiceClient emotionClient,
                               @NonNull final OnEmotionRequestComplete listener) {
-        _image = image;
         _emotionClient = emotionClient;
         _listener = listener;
     }
 
     @Override
-    protected List<RecognizeResult> doInBackground(Void... args) {
+    protected List<RecognizeResult> doInBackground(byte[]... image) {
         try {
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(_image);
+            mImage = image[0];
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(mImage);
             return _emotionClient.recognizeImage(inputStream);
         }
         catch (Exception e) {
@@ -80,7 +77,7 @@ public class CallEmotionApiTask extends AsyncTask<Void, Void, List<RecognizeResu
     @Override
     protected void onPostExecute(List<RecognizeResult> result) {
         if (mException == null) {
-            _listener.onEmotionResult(result, _image);
+            _listener.onEmotionResult(result, mImage);
         }
         else {
             _listener.onError(mException);
