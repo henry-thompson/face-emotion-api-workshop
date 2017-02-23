@@ -6,6 +6,8 @@ the Cognitive Services Face APIs.
 
 ## Prerequisites
 
+If you just want to watch how to build an app with Cognitive Services just come along! If you want to follow along with the coding then make sure you have the following.
+
 1. Proficiency in Java. Understanding of the Observer deisgn pattern desirable.
 2. A working installation of [Android Studio](https://developer.android.com/studio/index.html).
 3. Some way to run Android apps. A physical Android device connected over USB is desirable (_don't forget your USB cable!_), otherwise an emulator will do.
@@ -14,7 +16,9 @@ Windows, Mac OS and Linux are all acceptable.
 
 ## Preparing for the Workshop
 
-If you are attending this workshop do the following. __It is highly recommended you do this before coming along.__
+If you just want to watch how to build an app with Cognitive Services just come along!
+
+If you want to follow along with the coding then make sure you have the following. __It is highly recommended you do this before coming along.__
 
 1. Make sure you have Git installed. If not, follow instructions [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
 2. Clone this repository by typing this command: `git clone https://github.com/cambridge-msp/face-emotion-api-workshop.git`.
