@@ -40,12 +40,6 @@ public class CameraActivity extends AppCompatActivity implements
         CallEmotionApiTask.OnEmotionRequestComplete,
         VerifyIsCharliesFaceTask.OnAssessIsCharliesFaceComplete {
 
-    /** The Client for accessing the Microsoft Emotion API endpoint. */
-    private EmotionServiceClient mEmotionClient;
-
-    /** The Client for accessing the Microsoft Face API endpoint. */
-    private FaceServiceClient mFaceClient;
-
     /** The View which displays what is in front of the back camera to the user. */
     private CameraView mCameraView;
 
@@ -74,9 +68,6 @@ public class CameraActivity extends AppCompatActivity implements
         mAssessCrispinessButton = (Button) findViewById(R.id.activity_camera_crisp_button);
         mProgressBar = (ProgressBar) findViewById(R.id.activity_camera_progress);
         mResultsList = (ListView) findViewById(R.id.activity_camera_result_list);
-
-        mEmotionClient = new EmotionServiceRestClient(getString(R.string.emotion_api_subscription_key));
-        mFaceClient = new FaceServiceRestClient(getString(R.string.face_api_subscription_key));
 
         mCameraView.addCallback(onPictureTaken);
         mAssessEmotionsButton.setOnClickListener(v -> assessEmotion());
@@ -295,13 +286,7 @@ public class CameraActivity extends AppCompatActivity implements
 
             showProgressSpinner();
 
-            if (mDemonstrationMode == DemonstrationMode.Emotion) {
-                new CallEmotionApiTask(mEmotionClient, CameraActivity.this).execute(data);
-            }
-            else if (mDemonstrationMode == DemonstrationMode.Face) {
-                final InputStream charlie = getResources().openRawResource(R.raw.charlie);
-                new VerifyIsCharliesFaceTask(charlie, mFaceClient, CameraActivity.this).execute(data);
-            }
+            // TODO: We need to call the APIs!
         }
     };
 
@@ -313,14 +298,7 @@ public class CameraActivity extends AppCompatActivity implements
         EmotionApiListAdapter.Item[] items = new EmotionApiListAdapter.Item[results.size()];
 
         for (int i = 0; i < results.size(); i++) {
-            final RecognizeResult result = results.get(i);
-            final Bitmap face = Bitmap.createBitmap(bitmap,
-                    result.faceRectangle.left,
-                    result.faceRectangle.top,
-                    result.faceRectangle.width,
-                    result.faceRectangle.height);
-
-            items[i] = new EmotionApiListAdapter.Item(face, result);
+            // TODO: Populate the list with items.
         }
 
         mResultsList.setVisibility(View.VISIBLE);
@@ -331,22 +309,7 @@ public class CameraActivity extends AppCompatActivity implements
     @Override
     public void onAssessIsCharliesFaceComplete(@NonNull final VerifyResult result,
                                                @NonNull final byte[] image) {
-        final double confidencePercentage = result.confidence * 100;
-        final String message;
-
-        if (result.isIdentical) {
-            message = "Yes you are! You are in fact " + confidencePercentage + "% Crispy.";
-        }
-        else {
-            message = "No you're not, you're only " + confidencePercentage + "% Crispy.";
-        }
-
-        new AlertDialog.Builder(this)
-                .setTitle("Are you Charlie Crisp?")
-                .setMessage(message)
-                .setPositiveButton(android.R.string.ok, null)
-                .setOnDismissListener(v -> resetCameraActivity())
-                .show();
+        throw new UnsupportedOperationException("Unimplemented!");
     }
 
     @Override

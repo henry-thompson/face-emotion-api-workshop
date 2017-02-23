@@ -38,9 +38,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile 'com.microsoft.projectoxford:emotion:1.0.355'
-    compile 'com.microsoft.projectoxford:face:1.0.0'
-
     compile 'com.github.google:cameraview:a9d1eb9bad93dd8da981d380e37f58e35f847af5'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {

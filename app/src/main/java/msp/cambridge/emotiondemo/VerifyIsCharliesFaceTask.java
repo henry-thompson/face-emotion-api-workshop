@@ -69,37 +69,7 @@ public class VerifyIsCharliesFaceTask extends AsyncTask<byte[], Void, VerifyResu
 
     @Override
     protected VerifyResult doInBackground(byte[]... image) {
-        mImage = image[0];
-        final InputStream input = new ByteArrayInputStream(mImage);
-
-        try {
-            final Face[] charliesFace = _faceClient.detect(_charliesFace, // Image to analyse
-                                                           true,  // Return face IDs?
-                                                           false, // Return face landmarks?
-                                                           null); // Face landmarks to analyse
-
-            final Face[] detected = _faceClient.detect(input, // Image to analyse
-                                                       true,  // Return face IDs?
-                                                       false, // Return face landmarks?
-                                                       null); // Face landmarks to analyse
-
-            if (detected.length == 0) {
-                throw new UnexpectedNumberOfFacesException("No faces found");
-            }
-            else if (detected.length > 1) {
-                throw new UnexpectedNumberOfFacesException("More than one face was found, " +
-                        "but only one face was expected!");
-            }
-
-            final UUID faceId = detected[0].faceId;
-            final UUID comparisonFaceId = charliesFace[0].faceId;
-
-            return _faceClient.verify(faceId, comparisonFaceId);
-        }
-        catch (Exception e) {
-            mException = e;
-            return null;
-        }
+        throw new UnsupportedOperationException("Unimplemented!");
     }
 
     @Override

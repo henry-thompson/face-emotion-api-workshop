@@ -63,15 +63,7 @@ public class CallEmotionApiTask extends AsyncTask<byte[], Void, List<RecognizeRe
 
     @Override
     protected List<RecognizeResult> doInBackground(byte[]... image) {
-        try {
-            mImage = image[0];
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(mImage);
-            return _emotionClient.recognizeImage(inputStream);
-        }
-        catch (Exception e) {
-            mException = e;
-            return null;
-        }
+        throw new UnsupportedOperationException("Unimplemented!");
     }
 
     @Override
