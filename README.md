@@ -55,9 +55,3 @@ Slides and a recording of the workshop will be added after it is run.
 ## About the Presnetation
 
 The original presentation is being given by Henry Thompson and David Adeboye on Friday February 24th 2017.
-
-## Keys for the Demo
-
-Emotion: `9517361959974c60a3c3475185a0bc4b`
-
-Face: `39dc01c061dd4429aa22c70aaf1db5bc`
