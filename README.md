@@ -59,4 +59,5 @@ The original presentation is being given by Henry Thompson and David Adeboye on 
 ## Keys for the Demo
 
 Emotion: `9517361959974c60a3c3475185a0bc4b`
-Face: `63e96428eeb2466394dcaa2469539632`
+
+Face: `39dc01c061dd4429aa22c70aaf1db5bc`
