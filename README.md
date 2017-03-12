@@ -50,8 +50,12 @@ Note that it does __not__ build!
 
 ## Slides
 
-Slides and a recording of the workshop will be added after it is run.
+You can find the SlideShow we used [here on Google Slides](https://docs.google.com/presentation/d/1aN3ICSz7GchXKse6Vcu1ZQ-V47avHZ4PJ47joi6Musk/edit?usp=sharing)
 
-## About the Presnetation
+## Recording
 
-The original presentation is being given by Henry Thompson and David Adeboye on Friday February 24th 2017.
+A recording of the workshop is [available on YouTube](https://www.youtube.com/watch?v=E3kFkzeaynw)
+
+## About the Presentation
+
+The original presentation is being given by [Henry Thompson](https://github.com/henry-thompson) and David Adeboye on Friday February 24th 2017.
