@@ -50,7 +50,7 @@ Note that it does __not__ build!
 
 ## Slides
 
-You can find the SlideShow we used [here on Google Slides](https://docs.google.com/presentation/d/1aN3ICSz7GchXKse6Vcu1ZQ-V47avHZ4PJ47joi6Musk/edit?usp=sharing)
+You can find the slide show we used [here on Google Slides](https://docs.google.com/presentation/d/1aN3ICSz7GchXKse6Vcu1ZQ-V47avHZ4PJ47joi6Musk/edit?usp=sharing)
 
 ## Recording
 
